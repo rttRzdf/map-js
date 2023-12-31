@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>マウス移動テスト</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = 500;
+        let context = canvas.getContext('2d');
+        context.fillRect(100, 100, 100, 100);  // 初期位置に四角形を描画
+
+        let isDragging = false;
+        var defaultx = 100;
+        var defaulty = 100;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        // マウスがクリックされたとき
+        canvas.addEventListener('mousedown', function (event) {
+            isDragging = true;
+            offsetX = event.clientX - canvas.getBoundingClientRect().left - defaultx;
+            offsetY = event.clientY - canvas.getBoundingClientRect().top - defaulty;
+        });
+
+        // マウスが移動したとき
+        canvas.addEventListener('mousemove', function (event) {
+            if (isDragging) {
+                // マウスがドラッグ中のときの処理
+                // ここでは、コンテンツの位置をマウスの位置に合わせて更新します
+                let x = event.clientX - canvas.getBoundingClientRect().left;
+                let y = event.clientY - canvas.getBoundingClientRect().top;
+                context.clearRect(0, 0, canvas.width, canvas.height);  // 以前の描画をクリア
+                context.fillRect(x - offsetX, y - offsetY, 100, 100);  // 新しい位置に四角形を描画
+                defaultx = x - offsetX;
+                defaulty = y - offsetY;
+            }
+        });
+
+        // マウスが離されたとき
+        canvas.addEventListener('mouseup', function (event) {
+            isDragging = false;
+        });
+    </script>
+</body>
+
+</html>
