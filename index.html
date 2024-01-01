@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 <html>
-
-<head>
+    <head>
         <title>WebGL TEST</title>
         <script src="script.js" type="text/javascript"></script>
         <script src="minMatrix.js" type="text/javascript"></script>
@@ -10,14 +8,18 @@
 attribute vec3 position;
 uniform   mat4 mvpMatrix;
 
-    <script>
-        let canvas = document.getElementById('myCanvas');
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
-        let gl = canvas.getContext('webgl');
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    </script>
-</body>
-
+void main(void){
+    gl_Position = mvpMatrix * vec4(position, 1.0);
+}
+        </script>
+        
+        <script id="fs" type="x-shader/x-fragment">
+void main(void){
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+}
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    </body>
 </html>
